@@ -1,0 +1,7 @@
+1. Crear la base de datos en PostgreSQL con el nombre de GestionEventos
+2. Ejecutar el script PostgreSQL
+3. Cargar el proyecto en netbeans que se encuentra en la carpeta Enterprise
+
+Notas:
+- Use la versión de Netbeans 8.2
+- Contraseña por defecto = 'postgres2020'
