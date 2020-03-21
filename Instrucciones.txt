@@ -1,0 +1,15 @@
+﻿1. Crear la base de datos en PostgreSQL con el nombre de GestionEventos
+2. Ejecutar el script PostgreSQL  que se encuentra en la carpeta Enterprise
+3. Ejecutar el script DML  que se encuentra en la carpeta Enterprise
+4. Cargar el proyecto en netbeans
+5. IMPORTANTE: cargar los.jar jcalendar-1.4 y postgresql-9.4.1212.jre6
+Notas:
+- Use la versión de Netbeans 8.2
+- Contraseña por defecto = 'postgres2020'
+- Funcionario por defecto:
+	- identificación = 100
+	- contraseña = contrfun
+- Asociado por defecto:
+	- identificacion = 101
+	- contraseña = contrasc
+2. Añadir postgresql.jar
