@@ -1,4 +1,4 @@
-1. Crear la base de datos en PostgreSQL con el nombre de GestionEventos
+﻿1. Crear la base de datos en PostgreSQL con el nombre de GestionEventos
 2. Ejecutar el script PostgreSQL  que se encuentra en la carpeta Enterprise
 3. Ejecutar el script DML  que se encuentra en la carpeta Enterprise
 4. Cargar el proyecto en netbeans
@@ -11,3 +11,4 @@ Notas:
 - Asociado por defecto:
 	- identificacion = 101
 	- contraseña = contrasc
+2. Añadir postgresql.jar
