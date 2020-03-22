@@ -71,8 +71,6 @@ public class DetalleInscripcionDAO {
 
         } catch (SQLException e) {
             throw new CaException("DetalleInscripcionDAO", "No se pudo obtener el detalle de inscripción " + e.getMessage());
-        } finally {
-            ServiceLocator.getInstance().liberarConexion();
         }
     }
 

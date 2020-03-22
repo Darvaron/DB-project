@@ -5,6 +5,15 @@
  */
 package gui;
 
+import datos.InscripcionDAO;
+import java.awt.HeadlessException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import negocio.GestorInscripcion;
+import negocio.Inscripcion;
+import util.CaException;
+
 /**
  *
  * @author PC-Lirol
@@ -12,10 +21,16 @@ package gui;
 public class menuInscrip extends javax.swing.JFrame {
 
     /**
-     * Creates new form menuInscrip
+     * Creates new form menuPersona
      */
+    Inscripcion insReal;
+    boolean asiste = false;
+    
     public menuInscrip() {
+
+        super("Inscribirse a un evento");
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -27,21 +42,108 @@ public class menuInscrip extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        insfami = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        idEvento = new javax.swing.JTextField();
+        cedula = new javax.swing.JTextField();
+        inscribirse = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        tipoID1 = new javax.swing.JComboBox<>();
+        asis = new javax.swing.JComboBox<>();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        insfami.setText("Inscribir Familiar");
+        insfami.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insfamiActionPerformed(evt);
+            }
+        });
+        getContentPane().add(insfami, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
+
+        jLabel1.setText("Identificacion del evento");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 140, 20));
+
+        jLabel2.setText("Identificion del Asociado");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 150, 20));
+
+        jLabel3.setText("Asiste al evento");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 90, 20));
+        getContentPane().add(idEvento, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 200, -1));
+        getContentPane().add(cedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 110, -1));
+
+        inscribirse.setText("Inscribirse");
+        inscribirse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inscribirseActionPerformed(evt);
+            }
+        });
+        getContentPane().add(inscribirse, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 90, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 30, 10));
+
+        jButton1.setText("Volver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 70, -1));
+
+        tipoID1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CC", "PA", "CA" }));
+        getContentPane().add(tipoID1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, -1));
+
+        asis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "si", "no" }));
+        getContentPane().add(asis, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void insfamiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insfamiActionPerformed
+        menuInscripFam insf = new menuInscripFam();
+        insf.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_insfamiActionPerformed
+
+    private void inscribirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscribirseActionPerformed
+
+        GestorInscripcion gestor = new GestorInscripcion();
+        InscripcionDAO inscripcionDAO = gestor.getInscripcionDAO();
+
+        insReal = inscripcionDAO.getIns();
+
+        try {
+            insReal.setI_estadoi("ES");
+            //insReal.setV_ins(100000);
+            if (asis.getSelectedIndex() == 0) {
+                asiste = true;
+            } else {
+                asiste = false;
+            }
+            insReal.setO_asiste(asiste);
+            insReal.setK_tipo(tipoID1.getItemAt(tipoID1.getSelectedIndex())); //Verificar que si cumpla el check porque no era como tarjeta de credito lo que entraba si no como tc o td o cosas asi
+            insReal.setK_code(Integer.parseInt(idEvento.getText()));
+            insReal.setK_num(Integer.parseInt(cedula.getText()));
+
+            inscripcionDAO.setIns(insReal);
+            gestor.setInscripcionDAO(inscripcionDAO);
+
+            inscripcionDAO.incluirInscripcion();
+            JOptionPane.showMessageDialog(null, "Se ha realizado la inscripcion con numero: "+1);
+        } catch (CaException ex) {
+            JOptionPane.showMessageDialog(null, "Inscripcion invalida, verifique los datos", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_inscribirseActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Menu m = new Menu();
+        m.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -69,6 +171,9 @@ public class menuInscrip extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(menuInscrip.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -79,5 +184,16 @@ public class menuInscrip extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> asis;
+    private javax.swing.JTextField cedula;
+    private javax.swing.JTextField idEvento;
+    private javax.swing.JButton inscribirse;
+    private javax.swing.JButton insfami;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JComboBox<String> tipoID1;
     // End of variables declaration//GEN-END:variables
 }

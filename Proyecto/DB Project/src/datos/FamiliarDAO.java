@@ -7,6 +7,7 @@ package datos;
 import util.CaException;
 import util.ServiceLocator;
 import java.sql.*;
+import java.util.ArrayList;
 import negocio.Familiar;
 
 /**
@@ -24,24 +25,23 @@ public class FamiliarDAO {
 
     public void incluirFamiliar() throws CaException {
         try {
-            String strSQL = "INSERT INTO famliar VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String strSQL = "INSERT INTO familiar VALUES ('" + f.getF_ntof() + "', ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
             PreparedStatement prepStmt = conexion.prepareCall(strSQL);
 
             //Fechas
-            String[] f_n = f.getF_ntof().split("/");
-            Date f_ntof = new Date(Integer.parseInt(f_n[0]), Integer.parseInt(f_n[1]), Integer.parseInt(f_n[2]));
-
-            prepStmt.setDate(1, f_ntof);
-            prepStmt.setInt(2, f.getK_numidf());
-            prepStmt.setString(3, f.getK_tipoidf());
-            prepStmt.setString(4, f.getN_nombre1f());
-            prepStmt.setString(5, f.getN_nombre2f());
-            prepStmt.setString(6, f.getN_ap1f());
-            prepStmt.setString(7, f.getN_ap2f());
-            prepStmt.setString(8, f.getO_parentesco());
-            prepStmt.setString(9, f.getK_tipo());
-            prepStmt.setInt(10, f.getK_num());
+            //String[] f_n = f.getF_ntof().split("/");
+            //Date f_ntof = new Date(Integer.parseInt(f_n[0]), Integer.parseInt(f_n[1]), Integer.parseInt(f_n[2]));
+            //prepStmt.setDate(1, f_ntof);
+            prepStmt.setInt(1, f.getK_numidf());
+            prepStmt.setString(2, f.getK_tipoidf());
+            prepStmt.setString(3, f.getN_nombre1f());
+            prepStmt.setString(4, f.getN_nombre2f());
+            prepStmt.setString(5, f.getN_ap1f());
+            prepStmt.setString(6, f.getN_ap2f());
+            prepStmt.setString(7, f.getO_parentesco());
+            prepStmt.setString(8, f.getK_tipo());
+            prepStmt.setInt(9, f.getK_num());
 
             prepStmt.executeUpdate();
             prepStmt.close();
@@ -58,39 +58,61 @@ public class FamiliarDAO {
 
     }
 
-    public void eliminarFamiliar() {
-
-    }
-
-    public void buscarFamiliar() throws CaException {
+    public void eliminarFamiliar() throws CaException {
         try {
-            String strSQL = "SELECT *  FROM familiar WHERE k_numidf = ? AND k_tipoidf = ?";
+            ArrayList<Familiar> familiares = new ArrayList();
+            String strSQL = "DELETE FROM familiar WHERE k_numidf = ? AND k_num = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
             PreparedStatement prepStrm = conexion.prepareStatement(strSQL);
 
             prepStrm.setInt(1, f.getK_numidf());
-            prepStrm.setString(2, f.getK_tipoidf());
+            prepStrm.setInt(2, f.getK_num());
+
+            prepStrm.executeUpdate();
+            prepStrm.close();
+            ServiceLocator.getInstance().commit();
+
+        } catch (SQLException e) {
+            throw new CaException("FamiliarDAO", "No se pudo obtener el familiar " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
+
+    }
+
+    public ArrayList<Familiar> buscarFamiliar() throws CaException {
+        try {
+            ArrayList<Familiar> familiares = new ArrayList();
+            String strSQL = "SELECT *  FROM familiar WHERE k_num = ?";
+            Connection conexion = ServiceLocator.getInstance().tomarConexion();
+            PreparedStatement prepStrm = conexion.prepareStatement(strSQL);
+
+            prepStrm.setInt(1, f.getK_num());
             ResultSet rs = prepStrm.executeQuery();
+            int aux = 0;
             while (rs.next()) {
+                familiares.add(new Familiar());
                 Date f_nto = rs.getDate(1);
-                f.setF_ntof(f_nto.toString());
-                f.setK_numidf(rs.getInt(2));
-                f.setK_tipoidf(rs.getString(3));
-                f.setN_nombre1f(rs.getString(4));
-                f.setN_nombre2f(rs.getString(5));
-                f.setN_ap1f(rs.getString(6));
-                f.setN_ap2f(rs.getString(7));
-                f.setO_parentesco(rs.getString(8));
-                f.setK_tipo(rs.getString(9));
-                f.setK_num(rs.getInt(10));
+                familiares.get(aux).setF_ntof(f_nto.toString());
+                familiares.get(aux).setK_numidf(rs.getInt(2));
+                familiares.get(aux).setK_tipoidf(rs.getString(3));
+                familiares.get(aux).setN_nombre1f(rs.getString(4));
+                familiares.get(aux).setN_nombre2f(rs.getString(5));
+                familiares.get(aux).setN_ap1f(rs.getString(6));
+                familiares.get(aux).setN_ap2f(rs.getString(7));
+                familiares.get(aux).setO_parentesco(rs.getString(8));
+                familiares.get(aux).setK_tipo(rs.getString(9));
+                familiares.get(aux).setK_num(rs.getInt(10));
+                aux++;
             }
+            return familiares;
         } catch (SQLException e) {
             throw new CaException("FamiliarDAO", "No se pudo obtener el familiar " + e.getMessage());
         } finally {
             ServiceLocator.getInstance().liberarConexion();
         }
     }
-
+    
     public void actualizarFamiliar() {
 
     }

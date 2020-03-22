@@ -40,8 +40,6 @@ public class Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnEvento = new javax.swing.JButton();
         btnInscripcion = new javax.swing.JButton();
-        usuarionm = new javax.swing.JLabel();
-        rolus = new javax.swing.JLabel();
         btnPersonas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -80,12 +78,6 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnInscripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 36, -1, -1));
-
-        usuarionm.setText(String.valueOf(Login.userReal.getK_idu()));
-        jPanel1.add(usuarionm, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 67, 74, -1));
-
-        rolus.setText(Login.userReal.getO_rol());
-        jPanel1.add(rolus, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 87, -1, -1));
 
         btnPersonas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnPersonas.setText("Personas");
@@ -188,7 +180,5 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel rolus;
-    private javax.swing.JLabel usuarionm;
     // End of variables declaration//GEN-END:variables
 }

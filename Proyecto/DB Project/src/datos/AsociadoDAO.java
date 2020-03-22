@@ -8,6 +8,7 @@ import negocio.Asociado;
 import util.CaException;
 import util.ServiceLocator;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,14 +35,15 @@ public class AsociadoDAO {
             PreparedStatement prepStmt = conexion.prepareStatement(srtSQL);
 
             //Obtiene las fechas
-            /*String[] f_af = as.getF_afiliacion().split("/");
-            Date f_afiliacion = new Date(Integer.parseInt(f_af[0]), Integer.parseInt(f_af[1]), Integer.parseInt(f_af[2]));
-            String[] f_nto = as.getF_nto().split("/");
-            Date f_nac = new Date(Integer.parseInt(f_nto[0]), Integer.parseInt(f_nto[1]), Integer.parseInt(f_nto[2]));
-            */
-            
+            // String[] f_af = as.getF_afiliacion().split("/");
+            //Date f_afiliacion = new Date(Integer.parseInt(f_af[0]), Integer.parseInt(f_af[1]), Integer.parseInt(f_af[2]));
+            //String[] f_nto = as.getF_nto().split("/");
+            // JOptionPane.showMessageDialog(null,f_nto[0]+" "+f_nto[1]+" "+f_nto[2]);
+            //Date f_nac = new Date(Integer.parseInt(f_nto[0]), Integer.parseInt(f_nto[1]), Integer.parseInt(f_nto[2]));
             prepStmt.setInt(1, as.getO_tel());
+            //prepStmt.setDate(2, f_afiliacion);
             prepStmt.setDouble(2, as.getV_sueldo());
+            // prepStmt.setString(3, "'2010-03-03'");
             prepStmt.setString(3, as.getK_tipo());
             prepStmt.setInt(4, as.getK_num());
             prepStmt.setString(5, as.getN_nombre1());
@@ -107,8 +109,6 @@ public class AsociadoDAO {
             }
         } catch (SQLException e) {
             throw new CaException("AsociadoDAO", "No se pudo obtener el asociado " + e.getMessage());
-        } finally {
-            ServiceLocator.getInstance().liberarConexion();
         }
     }
 

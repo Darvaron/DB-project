@@ -76,8 +76,6 @@ public class PagoIDAO {
                     
         } catch (SQLException e) {
             throw new CaException("PagoIDAO", "No se pudo obtener el pago de la inscripción" + e.getMessage());
-        } finally {
-            ServiceLocator.getInstance().liberarConexion();
         }
     }
     

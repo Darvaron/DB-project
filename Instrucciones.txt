@@ -5,6 +5,8 @@
 5. IMPORTANTE: cargar los.jar jcalendar-1.4 y postgresql-9.4.1212.jre6
 Notas:
 - Use la versión de Netbeans 8.2
+- Puede que necesite añadir la librería AbsoluteLayout directamente en el proyecto ya que a veces netbeans no la carga correctamente.
+Para esto ingrese a añadir .jar al proyecto y seleccione el siguiente archivo: C:\Program Files\NetBeans 8.2\java\modules\ext\AbsoluteLayout.jar
 - Contraseña por defecto = 'postgres2020'
 - Funcionario por defecto:
 	- identificación = 100

@@ -46,8 +46,6 @@ public class crearEvento extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         grupoCopago = new javax.swing.ButtonGroup();
         grupoSobrecupo = new javax.swing.ButtonGroup();
-        usuarionm = new javax.swing.JLabel();
-        rolus = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         btnCrearEv = new javax.swing.JButton();
@@ -95,10 +93,6 @@ public class crearEvento extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
-
-        usuarionm.setText(String.valueOf(Login.userReal.getK_idu()));
-
-        rolus.setText(Login.userReal.getO_rol());
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ud.png"))); // NOI18N
 
@@ -428,11 +422,7 @@ public class crearEvento extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(usuarionm, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rolus))
-                .addGap(81, 81, 81)
+                .addGap(200, 200, 200)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addComponent(jLabel12)
@@ -452,11 +442,6 @@ public class crearEvento extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(usuarionm)
-                        .addGap(6, 6, 6)
-                        .addComponent(rolus))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jLabel13))
@@ -723,7 +708,6 @@ public class crearEvento extends javax.swing.JFrame {
     private javax.swing.JSpinner numMaxPersonas;
     private javax.swing.JRadioButton rbSobrecupNO;
     private javax.swing.JRadioButton rbSobrecupSI;
-    private javax.swing.JLabel rolus;
     private javax.swing.JTextArea textADescrip;
     private javax.swing.JTextArea textAObserv;
     private javax.swing.JTextField txtIdEv;
@@ -731,6 +715,5 @@ public class crearEvento extends javax.swing.JFrame {
     private javax.swing.JTextField txtLugar;
     private javax.swing.JTextField txtNombreEv;
     private javax.swing.JTextField txtValorEv;
-    private javax.swing.JLabel usuarionm;
     // End of variables declaration//GEN-END:variables
 }
