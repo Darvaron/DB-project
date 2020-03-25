@@ -23,7 +23,8 @@ import negocio.Inscripcion;
  * @author JOHN
  */
 public class consultarEstadisticas extends javax.swing.JFrame {
-
+    static Inscripcion ins;
+    static Evento ev;
     /**
      * Creates new form consultarEstadisticas
      */
@@ -138,6 +139,9 @@ public class consultarEstadisticas extends javax.swing.JFrame {
         String idEv = txtIdEv.getText();
         GestorEvento consulta  = new GestorEvento();
         EventoDAO eventc = consulta.getEventoDAO();
+        //InscripcionDAO insc = consulta.getInscripcionDAO();
+        ev = eventc.getEv();
+        //ins = insc.getIns();
         if (idEv.isEmpty()) {
             JOptionPane.showMessageDialog(null, "El campo está vacío", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }

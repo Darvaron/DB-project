@@ -44,7 +44,7 @@ public class ServiceLocator {
 
     private ServiceLocator() throws Exception {
         try {
-            String url = "jdbc:postgresql://localhost:5432/Gestionar Evento";
+            String url = "jdbc:postgresql://localhost:5432/Gestor evento";
             String usuario = "postgres";
             String password = "";
             Class.forName("org.postgresql.Driver").newInstance();

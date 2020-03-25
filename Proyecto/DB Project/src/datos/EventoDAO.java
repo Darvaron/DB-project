@@ -161,7 +161,7 @@ public class EventoDAO {
     
     public void cerrarEvento() throws CaException {
         try {
-            String strSQL = "UPDATE evento SET estado = 'C' WHERE k_code = ?";
+            String strSQL = "UPDATE evento SET i_estado = 'C' WHERE k_code = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
             PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
 
@@ -187,7 +187,6 @@ public class EventoDAO {
             PreparedStatement prepStmt = conexion.prepareCall(strSQL);
             prepStmt.setInt(1, ev.getK_code());
             ResultSet rs = prepStmt.executeQuery();
-            rs.first();
             while(rs.next()){
                 fila = rs.getString(1)+ " " + rs.getString(2)+ " " + rs.getString(3)+ " " + rs.getString(4)+ " " + rs.getString(5);
             }
