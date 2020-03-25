@@ -24,7 +24,7 @@ public class PagoIDAO {
 
     public void incluirPagoI() throws CaException {
         try {
-            String strSQL = "INSERT INTO pagoi VALUES (?, ?, ?, ?, ?)";
+            String strSQL = "INSERT INTO pagoi VALUES (?, CURRENT_DATE, ?, ?, ?)";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
             PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
 
@@ -33,10 +33,10 @@ public class PagoIDAO {
             Date f_pagop = new Date(Integer.parseInt(f_pp[0]), Integer.parseInt(f_pp[1]), Integer.parseInt(f_pp[2]));
 
             prepStmt.setInt(1, pa.getK_idpi());
-            prepStmt.setDate(0, f_pagop);
-            prepStmt.setString(3, pa.getO_fpagoi());
-            prepStmt.setDouble(4, pa.getV_inspi());
-            prepStmt.setDouble(5, pa.getK_ins());
+            //prepStmt.setDate(0, f_pagop);
+            //prepStmt.setString(3, pa.getO_fpagoi());
+            prepStmt.setDouble(3, pa.getV_inspi());
+            prepStmt.setDouble(4, pa.getK_ins());
 
             prepStmt.executeUpdate();
             prepStmt.close();
@@ -76,8 +76,6 @@ public class PagoIDAO {
                     
         } catch (SQLException e) {
             throw new CaException("PagoIDAO", "No se pudo obtener el pago de la inscripción" + e.getMessage());
-        } finally {
-            ServiceLocator.getInstance().liberarConexion();
         }
     }
     

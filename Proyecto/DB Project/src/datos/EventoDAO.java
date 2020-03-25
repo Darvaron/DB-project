@@ -42,8 +42,7 @@ public class EventoDAO {
             Date f_maxins = new Date(Integer.parseInt(f_max[0]), Integer.parseInt(f_max[1]), Integer.parseInt(f_max[2]));
             String[] f_ci = ev.getF_cierre().split("-");
             Date f_cierre = new Date(Integer.parseInt(f_ci[0]), Integer.parseInt(f_ci[1]), Integer.parseInt(f_ci[2]));
-            */
-            
+             */
             prepStmt.setString(1, ev.getI_estado());
             prepStmt.setInt(2, ev.getQ_cupo());
             prepStmt.setDouble(3, ev.getV_total());
@@ -120,9 +119,84 @@ public class EventoDAO {
             ServiceLocator.getInstance().liberarConexion();
         }
     }
+
+    public void actualizarCupo() throws CaException {
+        try {
+            String strSQL = "UPDATE evento SET q_cupodisp = q_cupodisp-1 WHERE k_code=?";
+            Connection conexion = ServiceLocator.getInstance().tomarConexion();
+            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+
+            prepStmt.setInt(1, ev.getK_code());
+            
+            prepStmt.executeUpdate();
+            prepStmt.close();
+            ServiceLocator.getInstance().commit();
+            
+        } catch (SQLException e) {
+            throw new CaException("EventoDAO", "No se pudo obtener el evento " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
+    }
+
+    public int buscarCupos() throws CaException {
+        try {
+            int i = 0;
+            String strSQL = "SELECT q_cupodisp FROM evento WHERE k_code = ?";
+            Connection conexion = ServiceLocator.getInstance().tomarConexion();
+            PreparedStatement prepStmt = conexion.prepareCall(strSQL);
+
+            prepStmt.setInt(1, ev.getK_code());
+            ResultSet rs = prepStmt.executeQuery();
+            while (rs.next()) {
+                i = rs.getInt(1);
+            }
+            return i;
+        } catch (SQLException e) {
+            throw new CaException("EventoDAO", "No se pudo obtener el evento " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
+    }
     
-    public void actualizarEvento(){
-        
+    public void cerrarEvento() throws CaException {
+        try {
+            String strSQL = "UPDATE evento SET estado = 'C' WHERE k_code = ?";
+            Connection conexion = ServiceLocator.getInstance().tomarConexion();
+            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+
+            prepStmt.setInt(1, ev.getK_code());
+            
+            prepStmt.executeUpdate();
+            prepStmt.close();
+            ServiceLocator.getInstance().commit();
+            
+        } catch (SQLException e) {
+            throw new CaException("EventoDAO", "No se pudo obtener el evento " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
+    }
+    
+    public String consultarEstadisticas() throws CaException {
+        String fila= "";
+        try {
+            String strSQL = "SELECT evento.k_code, v_total, q_cupo, (q_cupo-q_cupodisp), ((q_cupo-q_cupodisp)*v_ins) FROM evento, inscripcion "
+                    + "WHERE evento.k_code= ? and evento.k_code=inscripcion.k_code ORDER BY evento.k_code" ;
+            Connection conexion = ServiceLocator.getInstance().tomarConexion();
+            PreparedStatement prepStmt = conexion.prepareCall(strSQL);
+            prepStmt.setInt(1, ev.getK_code());
+            ResultSet rs = prepStmt.executeQuery();
+            rs.first();
+            while(rs.next()){
+                fila = rs.getString(1)+ " " + rs.getString(2)+ " " + rs.getString(3)+ " " + rs.getString(4)+ " " + rs.getString(5);
+            }
+            return fila;
+        } catch (SQLException e) {
+            throw new CaException("EventoDAO", "No se pudo obtener el evento " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
     }
 
     public Evento getEv() {
@@ -132,6 +206,5 @@ public class EventoDAO {
     public void setEv(Evento ev) {
         this.ev = ev;
     }
-    
-    
+
 }

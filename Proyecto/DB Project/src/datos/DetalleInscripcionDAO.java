@@ -76,8 +76,29 @@ public class DetalleInscripcionDAO {
         }
     }
 
-    public void actualizarDetalleInscripcion() {
+    public void actualizarDetalleInscripcion() throws CaException {
 
+    }
+
+    public int obtenerEvento() throws CaException {
+        try {
+            int i = 0;
+            String strSQL = "SELECT evento.k_code FROM detalleinscripcion, evento, inscripcion WHERE detalleinscripcion.k_ins = inscripcion.k_ins AND inscripcion.k_code = evento.k_code AND inscripcion.k_ins = ? GROUP BY evento.k_code";
+            Connection conexion = ServiceLocator.getInstance().tomarConexion();
+            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+
+            prepStmt.setInt(1, det.getK_ins());
+            ResultSet rs = prepStmt.executeQuery();
+            
+            while (rs.next()) {
+                i = rs.getInt(1);
+            }
+            return i;
+        } catch (SQLException e) {
+            throw new CaException("DetalleInscripcionDAO", "No se pudo obtener el detalle de inscripción " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
     }
 
     public DetalleInscripcion getDet() {

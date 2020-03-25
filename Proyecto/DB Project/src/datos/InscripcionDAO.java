@@ -7,6 +7,8 @@ package datos;
 import util.CaException;
 import util.ServiceLocator;
 import java.sql.*;
+import java.util.ArrayList;
+import negocio.Familiar;
 import negocio.Inscripcion;
 
 /**
@@ -28,14 +30,10 @@ public class InscripcionDAO {
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
             PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
 
-            //Fecha
-            String[] f_i = ins.getF_inscrip().split("/");
-            Date f_ins = new Date(Integer.parseInt(f_i[0]), Integer.parseInt(f_i[1]), Integer.parseInt(f_i[2]));
-
             prepStmt.setInt(1, ins.getK_ins());
             prepStmt.setString(2, ins.getI_estadoi());
             prepStmt.setDouble(3, ins.getV_ins());
-            prepStmt.setBoolean(4, ins.isO_asiste());
+            prepStmt.setBoolean(4, ins.getO_asiste());
             prepStmt.setString(5, ins.getK_tipo());
             prepStmt.setInt(6, ins.getK_num());
             prepStmt.setInt(7, ins.getK_code());
@@ -59,7 +57,98 @@ public class InscripcionDAO {
 
     }
 
-    public void buscarInscripcion() throws CaException {
+    public ArrayList<String[]> buscarFamiliarInscrito() throws CaException {
+        try {
+            ArrayList<String[]> familiares = new ArrayList();
+            String strSQL = "SELECT k_ins, n_nombre1f, n_ap1f, familiar.k_numidf FROM familiar,detalleinscripcion WHERE detalleinscripcion.k_numidf = familiar.k_numidf AND k_ins = ? ";
+            Connection conexion = ServiceLocator.getInstance().tomarConexion();
+            PreparedStatement prepStrm = conexion.prepareStatement(strSQL);
+
+            prepStrm.setInt(1, ins.getK_ins());
+            ResultSet rs = prepStrm.executeQuery();
+            int aux = 0;
+            while (rs.next()) {
+                familiares.add(new String[4]);
+                familiares.get(aux)[0] = ("" + rs.getString(1));
+                familiares.get(aux)[1] = ("" + rs.getString(2));
+                familiares.get(aux)[2] = (rs.getString(3));
+                familiares.get(aux)[3] = ("" + rs.getString(4));
+                aux++;
+            }
+            return familiares;
+        } catch (SQLException e) {
+            throw new CaException("FamiliarDAO", "No se pudo obtener el familiar " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
+    }
+
+    public ArrayList<Inscripcion> buscarInscripcionAso() throws CaException {
+        try {
+            String strSQL = "SELECT * FROM inscripcion WHERE k_code = ? AND k_num= ?";
+            Connection conexion = ServiceLocator.getInstance().tomarConexion();
+            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+
+            prepStmt.setInt(1, ins.getK_code());
+            prepStmt.setInt(2, ins.getK_num());
+            ResultSet rs = prepStmt.executeQuery();
+            ArrayList<Inscripcion> insc = new ArrayList();
+            int aux = 0;
+
+            while (rs.next()) {
+                insc.add(new Inscripcion());
+                insc.get(aux).setK_ins(rs.getInt(1));
+                insc.get(aux).setI_estadoi(rs.getString(2));
+                insc.get(aux).setV_ins(rs.getDouble(3));
+                Date f_ins = rs.getDate(4);
+                insc.get(aux).setF_inscrip(f_ins.toString());
+                insc.get(aux).setO_asiste(rs.getBoolean(5));
+                insc.get(aux).setK_tipo(rs.getString(6));
+                insc.get(aux).setK_num(rs.getInt(7));
+                insc.get(aux).setK_code(rs.getInt(8));
+                aux++;
+            }
+            return insc;
+        } catch (SQLException e) {
+            throw new CaException("InscripcionDAO", "No se pudo obtener la inscripcion " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
+    }
+
+    public ArrayList<Inscripcion> buscarInscripcion() throws CaException {
+        try {
+            String strSQL = "SELECT * FROM inscripcion WHERE k_code = ?";
+            Connection conexion = ServiceLocator.getInstance().tomarConexion();
+            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+
+            prepStmt.setInt(1, ins.getK_code());
+            ResultSet rs = prepStmt.executeQuery();
+            ArrayList<Inscripcion> insc = new ArrayList();
+            int aux = 0;
+
+            while (rs.next()) {
+                insc.add(new Inscripcion());
+                insc.get(aux).setK_ins(rs.getInt(1));
+                insc.get(aux).setI_estadoi(rs.getString(2));
+                insc.get(aux).setV_ins(rs.getDouble(3));
+                Date f_ins = rs.getDate(4);
+                insc.get(aux).setF_inscrip(f_ins.toString());
+                insc.get(aux).setO_asiste(rs.getBoolean(5));
+                insc.get(aux).setK_tipo(rs.getString(6));
+                insc.get(aux).setK_num(rs.getInt(7));
+                insc.get(aux).setK_code(rs.getInt(8));
+                aux++;
+            }
+            return insc;
+        } catch (SQLException e) {
+            throw new CaException("InscripcionDAO", "No se pudo obtener la inscripcion " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
+    }
+
+    public void buscarInscripcionPrincipal() throws CaException {
         try {
             String strSQL = "SELECT * FROM inscripcion WHERE k_ins = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
@@ -67,6 +156,7 @@ public class InscripcionDAO {
 
             prepStmt.setInt(1, ins.getK_ins());
             ResultSet rs = prepStmt.executeQuery();
+
             while (rs.next()) {
                 ins.setK_ins(rs.getInt(1));
                 ins.setI_estadoi(rs.getString(2));
@@ -86,8 +176,25 @@ public class InscripcionDAO {
         }
     }
 
-    public void actualizarInscripcion() {
+    public void actualizarPagoInscripcion() throws CaException {
+        try {
+            String strSQL = "UPDATE inscripcion SET v_ins = v_ins + ? WHERE k_ins = ?";
+            Connection conexion = ServiceLocator.getInstance().tomarConexion();
+            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
 
+            prepStmt.setDouble(1, ins.getV_ins());
+            prepStmt.setInt(2, ins.getK_ins());
+            
+
+            prepStmt.executeUpdate();
+            prepStmt.close();
+            ServiceLocator.getInstance().commit();
+
+        } catch (SQLException e) {
+            throw new CaException("InscripcionDAO", "No se pudo crear la inscripción " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
     }
 
     public Inscripcion getIns() {

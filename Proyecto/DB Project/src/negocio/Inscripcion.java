@@ -23,6 +23,8 @@ public class Inscripcion {
     public Inscripcion() {
     }
 
+    
+    
     public int getK_ins() {
         return k_ins;
     }
@@ -55,10 +57,6 @@ public class Inscripcion {
         this.f_inscrip = f_inscrip;
     }
 
-    public boolean isO_asiste() {
-        return o_asiste;
-    }
-
     public void setO_asiste(boolean o_asiste) {
         this.o_asiste = o_asiste;
     }
@@ -66,6 +64,7 @@ public class Inscripcion {
     public String getK_tipo() {
         return k_tipo;
     }
+    
 
     public void setK_tipo(String k_tipo) {
         this.k_tipo = k_tipo;
@@ -73,6 +72,10 @@ public class Inscripcion {
 
     public int getK_num() {
         return k_num;
+    }
+    
+    public boolean getO_asiste(){
+        return o_asiste;
     }
 
     public void setK_num(int k_num) {

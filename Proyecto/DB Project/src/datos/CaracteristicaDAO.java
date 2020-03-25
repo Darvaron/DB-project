@@ -61,13 +61,13 @@ public class CaracteristicaDAO {
 
     public void buscarCaracteristica() throws CaException {
         try {
-            String strSQL = "SELECT * FROM caracteristica WHERE k_codev = ?";
+            String strSQL = "SELECT * FROM caracteristica WHERE k_code = ?";
             Connection conexion = ServiceLocator.getInstance().tomarConexion();
 
             PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
-            prepStmt.setInt(1, car.getK_codev());
+            prepStmt.setInt(1, car.getK_code());
+            car.setK_codev(-1);
             ResultSet rs = prepStmt.executeQuery();
-
             while (rs.next()) {
                 car.setK_codev(rs.getInt(1));
                 car.setP_subsidio(rs.getDouble(2));
@@ -76,8 +76,31 @@ public class CaracteristicaDAO {
                 car.setV_copago(rs.getDouble(5));
                 car.setK_code(rs.getInt(6));
             }
+            
+            
+            
         } catch (SQLException e) {
             throw new CaException("CatacteristicaDAO", "No se pudo obtener la caracteristica " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
+    }
+    
+    public String copagoValev() throws CaException{
+    try {
+            String strSQL = "SELECT ((q_cupo-q_cupodisp)*v_ins) FROM evento, inscripcion "
+                    + "WHERE evento.k_code=? and evento.k_code=inscripcion.k_code ORDER BY evento.k_code" ;
+            Connection conexion = ServiceLocator.getInstance().tomarConexion();
+            PreparedStatement prepStmt = conexion.prepareCall(strSQL);
+            prepStmt.setInt(1, car.getK_code());
+            ResultSet rs = prepStmt.executeQuery();
+            String copago = " ";
+            while(rs.next()){
+                copago = " " + rs.getInt(1);
+            }
+            return copago;
+        } catch (SQLException e) {
+            throw new CaException("CatacteristicaDAO", "No se pudo obtener el evento " + e.getMessage());
         } finally {
             ServiceLocator.getInstance().liberarConexion();
         }

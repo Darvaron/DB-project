@@ -78,8 +78,22 @@ public class PagoPDAO {
         }
     }
     
-    public void actualizarPagoP(){
-        
+    public void actualizarPagoP() throws CaException{
+        try {
+            String strSQL = "UPDATE pagop set f_pagop = CURRENT_DATE where k_idp = ?";
+            Connection conexion = ServiceLocator.getInstance().tomarConexion();
+            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
+
+            prepStmt.setInt(1, pg.getK_idp());
+            
+            prepStmt.executeUpdate();
+            prepStmt.close();
+            ServiceLocator.getInstance().commit();
+        }catch (SQLException e) {
+            throw new CaException("EventoDAO", "No se pudo obtener el evento " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
     }
 
     public PagoP getPg() {

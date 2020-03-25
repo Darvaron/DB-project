@@ -39,9 +39,6 @@ public class Menu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnEvento = new javax.swing.JButton();
-        btnInscripcion = new javax.swing.JButton();
-        usuarionm = new javax.swing.JLabel();
-        rolus = new javax.swing.JLabel();
         btnPersonas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -65,27 +62,7 @@ public class Menu extends javax.swing.JFrame {
                 btnEventoActionPerformed(evt);
             }
         });
-        jPanel1.add(btnEvento, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 36, -1, -1));
-
-        btnInscripcion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnInscripcion.setText("Inscripcion");
-        btnInscripcion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnInscripcionMouseClicked(evt);
-            }
-        });
-        btnInscripcion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInscripcionActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnInscripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 36, -1, -1));
-
-        usuarionm.setText(String.valueOf(Login.userReal.getK_idu()));
-        jPanel1.add(usuarionm, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 67, 74, -1));
-
-        rolus.setText(Login.userReal.getO_rol());
-        jPanel1.add(rolus, new org.netbeans.lib.awtextra.AbsoluteConstraints(174, 87, -1, -1));
+        jPanel1.add(btnEvento, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
         btnPersonas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnPersonas.setText("Personas");
@@ -99,7 +76,7 @@ public class Menu extends javax.swing.JFrame {
                 btnPersonasActionPerformed(evt);
             }
         });
-        jPanel1.add(btnPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 36, -1, -1));
+        jPanel1.add(btnPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 119, 410, -1));
 
@@ -112,10 +89,6 @@ public class Menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscripcionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInscripcionActionPerformed
 
     private void btnEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventoActionPerformed
         // TODO add your handling code here:
@@ -132,18 +105,11 @@ public class Menu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnEventoMouseClicked
 
-    private void btnInscripcionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInscripcionMouseClicked
-        // TODO add your handling code here:      
-        menuInscrip opins = new menuInscrip();
-        opins.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnInscripcionMouseClicked
-
     private void btnPersonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPersonasMouseClicked
         // TODO add your handling code here:
-        menuPersona opeper = new menuPersona();
-        opeper.setVisible(true);
-        this.dispose();
+        VistaAsociado v = new VistaAsociado();
+        v.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnPersonasMouseClicked
 
     /**
@@ -183,12 +149,9 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton btnEvento;
-    public static javax.swing.JButton btnInscripcion;
     public static javax.swing.JButton btnPersonas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel rolus;
-    private javax.swing.JLabel usuarionm;
     // End of variables declaration//GEN-END:variables
 }

@@ -285,7 +285,7 @@ public class crearProv extends javax.swing.JFrame {
         //Traemos los datos rellenados
         String idProv = txtIdProv.getText();
         String nombreprov = txtNombreProv.getText();
-        int telProv = Integer.parseInt(txtTelefono.getText());
+        int telProv = (int)Double.parseDouble(txtTelefono.getText());
         System.out.println(telProv);
         String calleP = txtCalleProv.getText();
         String numP = txtNumeroProv.getText();

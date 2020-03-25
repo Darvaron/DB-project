@@ -19,7 +19,7 @@ public class Informacion extends javax.swing.JDialog {
     public Informacion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);   
         initComponents();
-        if(buscarEvento.eventBusqueda.isO_tieneins()==true){
+        if(!buscarEvento.eventBusqueda.isO_tieneins()){
             lblCuotas.setVisible(false);
             lblCuotas.setEnabled(false);
             lblPsub.setVisible(false);

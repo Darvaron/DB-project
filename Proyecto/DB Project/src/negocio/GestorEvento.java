@@ -47,11 +47,27 @@ public class GestorEvento {
     public void incluirCaracteristica() throws CaException {
         caracteristicaDAO.incluirCaracteristica();
     }
+    
+    public void copagoValev() throws CaException {
+        caracteristicaDAO.copagoValev();
+    }
+    
+    public void actualizarPagoP() throws CaException {
+        pagoPDAO.actualizarPagoP();
+    }
 
     public void buscarEvento() throws CaException {
         eventoDAO.buscarEvento();
     }
-
+    
+    public void cerrarEvento() throws CaException {
+        eventoDAO.cerrarEvento();
+    }
+    
+    public void consultarEstadisticas() throws CaException {
+        eventoDAO.consultarEstadisticas();
+    }
+            
     public void buscarTipo() throws CaException {
         tipoDAO.buscarTipo();
     }
@@ -67,7 +83,11 @@ public class GestorEvento {
     public void buscarCaracteristica() throws CaException {
         caracteristicaDAO.buscarCaracteristica();
     }
-
+    
+    public int buscarCupo() throws CaException{
+        return eventoDAO.buscarCupos();
+    }
+    
     public EventoDAO getEventoDAO() {
         return eventoDAO;
     }

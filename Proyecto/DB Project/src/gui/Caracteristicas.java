@@ -44,8 +44,6 @@ public class Caracteristicas extends javax.swing.JFrame {
         comboBoxTipoPago = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         cuotasMax = new javax.swing.JSpinner();
-        jLabel4 = new javax.swing.JLabel();
-        txtCopago = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -105,9 +103,6 @@ public class Caracteristicas extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Cuotas Max");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Valor Copago");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -117,11 +112,9 @@ public class Caracteristicas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtCopago)
                     .addComponent(comboBoxTipoPago, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cuotasMax)
                     .addComponent(txtPorcSub, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -145,11 +138,7 @@ public class Caracteristicas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cuotasMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCopago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(41, 41, 41))
+                .addGap(72, 72, 72))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -203,7 +192,7 @@ public class Caracteristicas extends javax.swing.JFrame {
         
         carDef = car.getCar();
                 
-        if (txtPorcSub.getText().isEmpty() || txtCopago.getText().isEmpty()
+        if (txtPorcSub.getText().isEmpty()
                 || comboBoxTipoPago.getSelectedItem().toString() == null || numCuotasMax == null) {
             JOptionPane.showMessageDialog(null, "Uno de los campos está vacío", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -217,14 +206,12 @@ public class Caracteristicas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "El número de cuotas es incorrecto", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             } else if (Double.parseDouble(txtPorcSub.getText()) < 0) {
                 JOptionPane.showMessageDialog(null, "El porcentaje de subsidio es incorrecto", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            } else if (Double.parseDouble(txtCopago.getText()) < 0) {
-                JOptionPane.showMessageDialog(null, "El copago es incorrecto", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             }else{
                 carDef.setK_code(crearEvento.eventoDef.getK_code());
                 carDef.setK_codev(crearEvento.eventoDef.getK_code());
                 carDef.setO_tipopag(tipoPago);
                 carDef.setQ_cuotasmax(numCuotasMax);
-                carDef.setV_copago(Double.parseDouble(txtCopago.getText()));
+                carDef.setV_copago(crearEvento.eventoDef.getV_total()/crearEvento.eventoDef.getQ_cupo());
                 carDef.setP_subsidio(Double.parseDouble(txtPorcSub.getText()));
                 
                 car.setCar(carDef);
@@ -317,9 +304,7 @@ public class Caracteristicas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtCopago;
     private javax.swing.JTextField txtPorcSub;
     // End of variables declaration//GEN-END:variables
 }
